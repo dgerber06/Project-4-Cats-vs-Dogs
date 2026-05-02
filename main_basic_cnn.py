@@ -12,6 +12,7 @@ from tensorflow.keras.preprocessing.image import ImageDataGenerator
 model = Sequential()
 
 # ** ADD YOUR CODE HERE **
+
 filter_size = (3,3) 
 filter_num = 32
 input_size = (180, 180)
@@ -25,9 +26,40 @@ model.add(MaxPooling2D(pool_size = pool_size))
 
 model.add(Flatten())
 model.add(Dense(32, activation="relu"))
-model.add(Dense(10, activation="sigmoid"))
+model.add(Dense(1, activation="sigmoid"))
 
 
 print("Model compiles")
 print(model) 
 
+model.compile(
+  optimizer = 'adam',
+  loss = 'binary_crossentropy',
+  metrics = ['accuracy']
+)
+
+train_datagen = ImageDataGenerator(rescale = 1./255)
+test_datagen = ImageDataGenerator(rescale = 1./255)
+
+train_set = train_datagen.flow_from_directory(
+  'Dataset/Train',
+  target_size = input_size,
+  batch_size = 32,
+  class_mode = 'binary'
+)
+
+test_set = test_datagen.flow_from_directory(
+  'Dataset/Test',
+  target_size = input_size,
+  batch_size = 32,
+  class_mode = 'binary'
+)
+
+model.fit(
+  train_set,
+  steps_per_epoch = 100,
+  epochs = 10
+)
+
+loss, accuracy = model.evaluate(test_set, steps = 50)
+print("Test Accuracy", accuracy)
