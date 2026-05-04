@@ -15,17 +15,20 @@ model = Sequential()
 input_size = (180, 180)
 
 model.add(Conv2D(32, (3,3), activation='relu', input_shape = (180, 180, 3)))
-model.add(MaxPooling2D((2, 2)))
+model.add(MaxPooling2D(2, 2))
 
 model.add(Conv2D(64, (3,3), activation='relu'))
-model.add(MaxPooling2D((2, 2)))
+model.add(MaxPooling2D(2, 2))
 
 model.add(Conv2D(128, (3,3), activation='relu'))
-model.add(MaxPooling2D((2, 2)))
+model.add(MaxPooling2D(2, 2))
+
+model.add(Conv2D(128, (3,3), activation='relu'))
+model.add(MaxPooling2D(2, 2))
 
 model.add(Flatten())
-model.add(Dense(32, activation="relu"))
-model.add(Dropout(0.25))
+model.add(Dense(128, activation="relu"))
+model.add(Dropout(0.5))
 model.add(Dense(1, activation="sigmoid"))
 
 model.compile(
@@ -55,8 +58,10 @@ test_set = test_datagen.flow_from_directory(
 
 model.fit(
   train_set,
-  steps_per_epoch = 100,
-  epochs = 10
+  steps_per_epoch = train_set.samples // train_set.batch_size,
+  epochs = 25,
+  validation_data = test_set,
+  validation_steps = 50
 )
 
 loss, accuracy = model.evaluate(test_set, steps = 50)
