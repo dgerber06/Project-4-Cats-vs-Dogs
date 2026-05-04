@@ -12,25 +12,21 @@ from tensorflow.keras.preprocessing.image import ImageDataGenerator
 model = Sequential()
 
 # ** ADD YOUR CODE HERE **
-
-filter_size = (3,3) 
-filter_num = 32
 input_size = (180, 180)
-pool_size = (2,2)
 
-model.add(Conv2D(filter_num, filter_size, activation='relu'))
-model.add(MaxPooling2D(pool_size = pool_size))
+model.add(Conv2D(32, (3,3), activation='relu', input_shape = (180, 180, 3)))
+model.add(MaxPooling2D((2, 2)))
 
-model.add(Conv2D(filter_num, filter_size, activation='relu'))
-model.add(MaxPooling2D(pool_size = pool_size))
+model.add(Conv2D(64, (3,3), activation='relu'))
+model.add(MaxPooling2D((2, 2)))
+
+model.add(Conv2D(128, (3,3), activation='relu'))
+model.add(MaxPooling2D((2, 2)))
 
 model.add(Flatten())
 model.add(Dense(32, activation="relu"))
+model.add(Dropout(0.25))
 model.add(Dense(1, activation="sigmoid"))
-
-
-print("Model compiles")
-print(model) 
 
 model.compile(
   optimizer = 'adam',
@@ -38,9 +34,10 @@ model.compile(
   metrics = ['accuracy']
 )
 
-train_datagen = ImageDataGenerator(rescale = 1./255)
-test_datagen = ImageDataGenerator(rescale = 1./255)
+print("Model compiles")
+print(model) 
 
+train_datagen = ImageDataGenerator(rescale = 1./255, shear_range = 0.2, zoom_range = 0.2, horizontal_flip = True)
 train_set = train_datagen.flow_from_directory(
   'data/Train',
   target_size = input_size,
@@ -48,6 +45,7 @@ train_set = train_datagen.flow_from_directory(
   class_mode = 'binary'
 )
 
+test_datagen = ImageDataGenerator(rescale = 1./255)
 test_set = test_datagen.flow_from_directory(
   'data/Test',
   target_size = input_size,
