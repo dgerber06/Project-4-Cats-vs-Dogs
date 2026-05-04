@@ -40,7 +40,7 @@ model.compile(
 print("Model compiles")
 print(model) 
 
-train_datagen = ImageDataGenerator(rescale = 1./255, shear_range = 0.2, zoom_range = 0.2, horizontal_flip = True)
+train_datagen = ImageDataGenerator(rescale = 1./255)
 train_set = train_datagen.flow_from_directory(
   'data/Train',
   target_size = input_size,
@@ -58,8 +58,8 @@ test_set = test_datagen.flow_from_directory(
 
 model.fit(
   train_set,
-  steps_per_epoch = train_set.samples // train_set.batch_size,
-  epochs = 25,
+  steps_per_epoch = 100,
+  epochs = 15,
   validation_data = test_set,
   validation_steps = 50
 )
