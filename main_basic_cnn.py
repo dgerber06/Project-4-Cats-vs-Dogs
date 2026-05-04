@@ -23,9 +23,6 @@ model.add(MaxPooling2D(2, 2))
 model.add(Conv2D(128, (3,3), activation='relu'))
 model.add(MaxPooling2D(2, 2))
 
-model.add(Conv2D(128, (3,3), activation='relu'))
-model.add(MaxPooling2D(2, 2))
-
 model.add(Flatten())
 model.add(Dense(128, activation="relu"))
 model.add(Dropout(0.5))
@@ -52,14 +49,14 @@ test_datagen = ImageDataGenerator(rescale = 1./255)
 test_set = test_datagen.flow_from_directory(
   'data/Test',
   target_size = input_size,
-  batch_size = 64,
+  batch_size = 16,
   class_mode = 'binary'
 )
 
 model.fit(
   train_set,
   steps_per_epoch = 100,
-  epochs = 25,
+  epochs = 20,
   validation_data = test_set,
   validation_steps = 50
 )
