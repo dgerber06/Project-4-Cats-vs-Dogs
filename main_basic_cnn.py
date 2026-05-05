@@ -25,7 +25,7 @@ model.add(MaxPooling2D(2, 2))
 
 model.add(Flatten())
 model.add(Dense(128, activation="relu"))
-model.add(Dropout(0.25))
+model.add(Dropout(0.5))
 model.add(Dense(1, activation="sigmoid"))
 
 model.compile(
@@ -37,12 +37,20 @@ model.compile(
 print("Model compiles")
 print(model) 
 
-train_datagen = ImageDataGenerator(rescale = 1./255)
+train_datagen = ImageDataGenerator(rescale = 1./255, validation_split = 0.2)
 train_set = train_datagen.flow_from_directory(
   'data/Train',
   target_size = input_size,
   batch_size = 64,
   class_mode = 'binary'
+  subset = 'training'
+)
+val_set = train_datagen.flow_from_directory(
+  'data/Train',
+  target_size = input_size,
+  batch_size = 64,
+  class_mode = 'binary'
+  subset = 'validation'
 )
 
 test_datagen = ImageDataGenerator(rescale = 1./255)
@@ -61,5 +69,5 @@ model.fit(
   validation_steps = 50
 )
 
-loss, accuracy = model.evaluate(test_set, steps = 75)
+loss, accuracy = model.evaluate(test_set)
 print("Test Accuracy", accuracy)
