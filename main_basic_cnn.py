@@ -37,7 +37,7 @@ model.compile(
 print("Model compiles")
 print(model) 
 
-train_datagen = ImageDataGenerator(rescale = 1./255)
+train_datagen = ImageDataGenerator(rescale = 1./255, rotation_range = 20, zoom_range = 0.2, horizontal_flip = True)
 train_set = train_datagen.flow_from_directory(
   'data/Train',
   target_size = input_size,
@@ -50,7 +50,8 @@ test_set = test_datagen.flow_from_directory(
   'data/Test',
   target_size = input_size,
   batch_size = 64,
-  class_mode = 'binary'
+  class_mode = 'binary',
+  shuffle = False
 )
 
 model.fit(
