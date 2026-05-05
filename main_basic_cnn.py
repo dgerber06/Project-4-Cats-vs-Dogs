@@ -49,7 +49,7 @@ test_datagen = ImageDataGenerator(rescale = 1./255)
 test_set = test_datagen.flow_from_directory(
   'data/Test',
   target_size = input_size,
-  batch_size = 32,
+  batch_size = 64,
   class_mode = 'binary'
 )
 
