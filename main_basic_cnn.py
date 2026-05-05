@@ -12,9 +12,9 @@ from tensorflow.keras.preprocessing.image import ImageDataGenerator
 model = Sequential()
 
 # ** ADD YOUR CODE HERE **
-input_size = (60, 60)
+input_size = (100, 100)
 
-model.add(Conv2D(32, (3,3), activation='relu', input_shape = (60, 60, 3)))
+model.add(Conv2D(32, (3,3), activation='relu', input_shape = (100, 100, 3)))
 model.add(MaxPooling2D(2, 2))
 
 model.add(Conv2D(64, (3,3), activation='relu'))
