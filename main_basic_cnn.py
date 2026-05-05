@@ -12,7 +12,7 @@ from tensorflow.keras.preprocessing.image import ImageDataGenerator
 model = Sequential()
 
 # ** ADD YOUR CODE HERE **
-input_size = (180, 180)
+input_size = (150, 150)
 
 model.add(Conv2D(32, (3,3), activation='relu', input_shape = (180, 180, 3)))
 model.add(MaxPooling2D(2, 2))
@@ -25,7 +25,7 @@ model.add(MaxPooling2D(2, 2))
 
 model.add(Flatten())
 model.add(Dense(128, activation="relu"))
-model.add(Dropout(0.5))
+model.add(Dropout(0.25))
 model.add(Dense(1, activation="sigmoid"))
 
 model.compile(
@@ -37,7 +37,7 @@ model.compile(
 print("Model compiles")
 print(model) 
 
-train_datagen = ImageDataGenerator(rescale = 1./255)
+train_datagen = ImageDataGenerator(rescale = 1./255, rotation_range = 10, width_shift_range = 0.1, height_shift_range = 0.1, horizontal_flip = True)
 train_set = train_datagen.flow_from_directory(
   'data/Train',
   target_size = input_size,
@@ -55,8 +55,8 @@ test_set = test_datagen.flow_from_directory(
 
 model.fit(
   train_set,
-  steps_per_epoch = 100,
-  epochs = 20,
+  steps_per_epoch = 150,
+  epochs = 15,
   validation_data = test_set,
   validation_steps = 50
 )
