@@ -55,8 +55,8 @@ test_set = test_datagen.flow_from_directory(
 
 model.fit(
   train_set,
-  steps_per_epoch = 150,
-  epochs = 15,
+  steps_per_epoch = 100,
+  epochs = 20,
   validation_data = test_set,
   validation_steps = 50
 )
