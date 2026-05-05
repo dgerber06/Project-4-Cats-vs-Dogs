@@ -12,9 +12,9 @@ from tensorflow.keras.preprocessing.image import ImageDataGenerator
 model = Sequential()
 
 # ** ADD YOUR CODE HERE **
-input_size = (150, 150)
+input_size = (130, 130)
 
-model.add(Conv2D(32, (3,3), activation='relu', input_shape = (150, 150, 3)))
+model.add(Conv2D(32, (3,3), activation='relu', input_shape = (130, 130, 3)))
 model.add(MaxPooling2D(2, 2))
 
 model.add(Conv2D(64, (3,3), activation='relu'))
@@ -24,7 +24,7 @@ model.add(Conv2D(128, (3,3), activation='relu'))
 model.add(MaxPooling2D(2, 2))
 
 model.add(Flatten())
-model.add(Dense(128, activation="relu"))
+model.add(Dense(64, activation="relu"))
 model.add(Dropout(0.25))
 model.add(Dense(1, activation="sigmoid"))
 
@@ -55,10 +55,10 @@ test_set = test_datagen.flow_from_directory(
 
 model.fit(
   train_set,
-  steps_per_epoch = len(train_set),
+  steps_per_epoch = 100,
   epochs = 15,
   validation_data = test_set,
-  validation_steps = len(test_set)
+  validation_steps = 100
 )
 
 loss, accuracy = model.evaluate(test_set, steps = 100)
