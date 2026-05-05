@@ -25,7 +25,7 @@ model.add(MaxPooling2D(2, 2))
 
 model.add(Flatten())
 model.add(Dense(128, activation="relu"))
-model.add(Dropout(0.25))
+model.add(Dropout(0.5))
 model.add(Dense(1, activation="sigmoid"))
 
 model.compile(
@@ -58,7 +58,7 @@ model.fit(
   steps_per_epoch = 200,
   epochs = 20,
   validation_data = test_set,
-  validation_steps = 50
+  validation_steps = 75
 )
 
 loss, accuracy = model.evaluate(test_set, steps = 75)
