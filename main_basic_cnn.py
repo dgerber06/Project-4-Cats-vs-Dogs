@@ -61,5 +61,5 @@ model.fit(
   validation_steps = 50
 )
 
-loss, accuracy = model.evaluate(test_set, steps = 100)
+loss, accuracy = model.evaluate(test_set, steps = 75)
 print("Test Accuracy", accuracy)
