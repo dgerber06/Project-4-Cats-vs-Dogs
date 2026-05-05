@@ -41,7 +41,7 @@ train_datagen = ImageDataGenerator(rescale = 1./255, rotation_range = 10, width_
 train_set = train_datagen.flow_from_directory(
   'data/Train',
   target_size = input_size,
-  batch_size = 64,
+  batch_size = 16,
   class_mode = 'binary'
 )
 
@@ -55,8 +55,8 @@ test_set = test_datagen.flow_from_directory(
 
 model.fit(
   train_set,
-  steps_per_epoch = 100,
-  epochs = 20,
+  steps_per_epoch = 125,
+  epochs = 15,
   validation_data = test_set,
   validation_steps = 50
 )
